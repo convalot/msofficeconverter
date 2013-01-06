@@ -23,9 +23,22 @@ namespace mspowerpointconverter
                 return;
             }
             //read filenames
-            string input = args[0];
-            string output = args[1];
-
+            StringBuilder input = new StringBuilder(args[0].Length);
+            for (int i = 0; i < args[0].Length; i++)
+            {
+                if (args[0][i] == '/')
+                    input.Append('\\');
+                else
+                    input.Append(args[0][i]);
+            }
+            StringBuilder output = new StringBuilder(args[1].Length);
+            for (int i = 0; i < args[1].Length; i++)
+            {
+                if (args[1][i] == '/')
+                    output.Append('\\');
+                else
+                    output.Append(args[1][i]);
+            }
             //select output format
             PpSaveAsFileType format = PpSaveAsFileType.ppSaveAsDefault;
             string formatString;
@@ -35,7 +48,7 @@ namespace mspowerpointconverter
             }
             else
             {
-                formatString = output.Substring(output.LastIndexOf(".") + 1);
+                formatString = output.ToString().Substring(output.ToString().LastIndexOf(".") + 1);
             }
             if (formatString == "ppt")
                 format = PpSaveAsFileType.ppSaveAsPresentation;
@@ -90,7 +103,7 @@ namespace mspowerpointconverter
             Presentation pres;
             try
             {
-                pres = app.Presentations.Open(input, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
+                pres = app.Presentations.Open(input.ToString(), MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
             }
             catch(Exception ex)
             {
@@ -104,7 +117,7 @@ namespace mspowerpointconverter
                 try
                 {
                     //doc.SaveAs2(output, format);
-                    pres.SaveAs(output, format, MsoTriState.msoTriStateMixed);
+                    pres.SaveAs(output.ToString(), format, MsoTriState.msoTriStateMixed);
                 }
                 catch (Exception ex)
                 {
