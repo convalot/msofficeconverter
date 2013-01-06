@@ -20,8 +20,22 @@ namespace mswordconverter
                 return;
             }
             //read filenames
-            object input = args[0];
-            string output = args[1];
+            StringBuilder input = new StringBuilder(args[0].Length);
+            for (int i = 0; i < args[0].Length; i++)
+            {
+                if (args[0][i] == '/')
+                    input.Append('\\');
+                else
+                    input.Append(args[0][i]);
+            }
+            StringBuilder output = new StringBuilder(args[1].Length);
+            for (int i = 0; i < args[1].Length; i++)
+            {
+                if (args[1][i] == '/')
+                    output.Append('\\');
+                else
+                    output.Append(args[1][i]);
+            }
 
             //select output format
             object format = WdSaveFormat.wdFormatDocumentDefault;
@@ -32,7 +46,7 @@ namespace mswordconverter
             }
             else
             {
-                formatString = output.Substring(output.LastIndexOf(".") + 1);
+                formatString = output.ToString().Substring(output.ToString().LastIndexOf(".") + 1);
             }
             if (formatString == "doc")
                 format = WdSaveFormat.wdFormatDocument;
@@ -70,11 +84,11 @@ namespace mswordconverter
             Document doc;
             try
             {
-                doc = app.Documents.Open(input, false, true, false);
+                doc = app.Documents.Open(input.ToString(), false, true, false);
             }
             catch(Exception ex)
             {
-                System.Console.WriteLine("Unable to open file " + input);
+                System.Console.WriteLine("Unable to open file " + input.ToString());
                 System.Console.WriteLine("Error: " + ex.Message);
                 app.Quit(false);
                 return;
@@ -83,7 +97,7 @@ namespace mswordconverter
             {
                 try
                 {
-                    doc.SaveAs2(output, format);
+                    doc.SaveAs2(output.ToString(), format);
                 }
                 catch (Exception ex)
                 {
