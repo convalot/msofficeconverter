@@ -8,9 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("mswordconverter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Convalot")]
 [assembly: AssemblyProduct("mswordconverter")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
